@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<?php
+	header("Access-Control-Allow-Origin: *");
+	?>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="webroot/js/globals.js"></script>
+	<script src="webroot/js/jquery-1.9.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="webroot/css/bootstrap.min.css">
+	<script src="webroot/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		evento = '';
+		function aumenta(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "aumenta_turno.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html = "<div style='font-size:70px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div>";
+	              html += "<div style='font-size:50px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div>";
+	              document.getElementById("clicks").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+
+		function disminuye(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "disminuye_turno.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html = "<div style='font-size:70px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div>";
+	              html += "<div style='font-size:50px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div>";
+	              document.getElementById("clicks").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+
+		function video(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "cambia_video.php",
+		        data: ({
+		                video: 1
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          
+		        }
+		      });//cierre de ajax
+		}
+	</script>
+</head>
+<body>
+
+	<div class="container">
+	  <h2>Turnos</h2>
+	  <div class="btn-group btn-group-justified">
+	    <a href="#" class="btn btn-primary btn-lg" onclick="disminuye();" style="height: 70px;">Disminuye</a>
+	    <a href="#" class="btn btn-success btn-lg" onclick="aumenta();">Aumenta</a>
+	  </div>
+	  <div class="col-md-2 btn-group btn-group-justified" style="margin-top: 30px;">
+	    <a href="#" class="btn btn-success btn-lg" onclick="video();" style="height: 70px;">Video</a>
+	  </div>
+	</div>
+	
+	<div class="col-md-12" style="margin-top: 10px;">
+		<center>
+	        <div class="contador" style="width: 100%;">
+	            <div id="clicks" class="turno"></div>
+	        </div>
+	    </center>
+	</div>
+	
+
+    <script type="text/javascript">
+    	
+    	$( document ).ready(function() {
+    		if (evento == '' || evento == null) {
+    			$.ajax({
+		          type: "POST",
+		          url:        window.server + "obtiene_eventos.php",
+		          data: ({
+		                  
+		              }),
+		          dataType:   "html",
+		          async: false,
+		          success:    function(data){
+		            obj = $.parseJSON(data);
+		            html = "";
+		            for (var i = obj.length - 1; i >= 0; i--) {
+		            	html += "<option value='"+obj[i].id+"'>"+obj[i].name+"</option>";
+		            }
+		            document.getElementById("eventos").innerHTML = html;
+		          }
+		        });//cierre de ajax
+
+    			$("#myModal").modal();
+    		}
+	        
+		});
+
+		function enviaEvento(){
+			//alert($("#eventos").val());
+			evento = $("#eventos").val();
+			$.ajax({
+	          type: "POST",
+	          url:        window.server + "obtiene_turno.php",
+	          data: ({
+	                  evento_id: evento
+	              }),
+	          dataType:   "html",
+	          async: false,
+	          success:    function(data){
+	            obj = $.parseJSON(data);
+	              html = "<div style='font-size:70px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div>";
+	              html += "<div style='font-size:50px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div>";
+	              document.getElementById("clicks").innerHTML = html;
+	              $("#myModal").modal("hide");
+	          }
+	        });//cierre de ajax
+	        return false;
+		}
+
+    </script>
+
+    <!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog" data-backdrop="static">
+		<form>
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">Seleccione evento</h4>
+		      </div>
+		      <div class="modal-body">
+	      		<select id="eventos" class="form-control" required="true"></select>
+		      </div>
+		      <div class="modal-footer">
+		      	<input type="submit" name="" value="Seleccionar" class="btn btn-success" onclick="return enviaEvento();">
+		      </div>
+		    </div>
+
+		  </div>
+	  	</form>
+	</div>
+</body>
+</html>

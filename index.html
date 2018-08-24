@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<?php
+	header("Access-Control-Allow-Origin: *");
+	?>
+	<title>Administrador de Turnos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="webroot/js/globals.js"></script>
+	<script src="webroot/js/jquery-1.9.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="webroot/css/bootstrap.min.css">
+	<script src="webroot/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		evento = '';
+		function aumenta(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "aumenta_turno.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              document.getElementById("clicks").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+
+		function aumentaPantalla(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "aumenta_turno_pantalla.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              document.getElementById("clickspantalla").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+
+		function disminuye(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "disminuye_turno.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              document.getElementById("clicks").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+
+		function disminuye_pantalla(){
+			$.ajax({
+		        type: "POST",
+		        url:        window.server + "disminuye_turno_pantalla.php",
+		        data: ({
+		                evento_id: evento
+		            }),
+		        dataType:   "html",
+		        async: false,
+		        success:    function(data){
+		          obj = $.parseJSON(data);
+		          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              document.getElementById("clickspantalla").innerHTML = html;
+		        }
+		      });//cierre de ajax
+		}
+	</script>
+</head>
+<body>
+
+	<div class="container">
+	  <h2>Turnos gobernador</h2>
+	  
+	</div>
+	
+	<div class="col-md-12" style="margin-top: 10px;">
+		<center>
+	        <div class="contador" style="width: 100%;">
+	            <div id="clicks" class="turno"></div>
+	        </div>
+	    </center>
+
+	    <div class="btn-group btn-group-justified">
+		    <a href="#" class="btn btn-primary btn-lg" onclick="disminuye();" style="height: 50px;">Disminuye</a>
+		    <a href="#" class="btn btn-success btn-lg" onclick="aumenta();">Aumenta</a>
+		</div>
+
+		<br>
+
+		<div class="row">
+		  <div class="col-sm-4"></div>
+		  <div class="col-sm-4">
+		  	<div class="btn-group btn-group-justified">
+		  		<a href="javascript:;" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#directo">Directo</a>
+		  	</div>
+		  </div>
+		  <div class="col-sm-4"></div>
+		</div> 
+	</div>
+
+	<div class="container">
+	  <h2>Turnos pantalla</h2>
+	  
+	</div>
+	
+	<div class="col-md-12" style="margin-top: 10px;">
+		<center>
+	        <div class="contador" style="width: 100%;">
+	            <div id="clickspantalla" class="turno"></div>
+	        </div>
+	    </center>
+	    <div class="btn-group btn-group-justified">
+		    <a href="#" class="btn btn-primary btn-lg" onclick="disminuye_pantalla();" style="height: 50px;">Disminuye</a>
+		    <a href="#" class="btn btn-success btn-lg" onclick="aumentaPantalla();">Aumenta</a>
+		</div>
+
+		<br>
+
+		<div class="row">
+		  <div class="col-sm-4"></div>
+		  <div class="col-sm-4">
+		  	<div class="btn-group btn-group-justified">
+		  		<a href="javascript:;" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#directoPantalla">Directo</a>
+		  	</div>
+		  </div>
+		  <div class="col-sm-4"></div>
+		</div> 
+	</div>
+	
+
+    <script type="text/javascript">
+    	
+    	$( document ).ready(function() {
+    		if (evento == '' || evento == null) {
+    			$.ajax({
+		          type: "POST",
+		          url:        window.server + "obtiene_eventos.php",
+		          data: ({
+		                  
+		              }),
+		          dataType:   "html",
+		          async: false,
+		          success:    function(data){
+		            obj = $.parseJSON(data);
+		            html = "";
+		            for (var i = obj.length - 1; i >= 0; i--) {
+		            	html += "<option value='"+obj[i].id+"'>"+obj[i].name+"</option>";
+		            }
+		            document.getElementById("eventos").innerHTML = html;
+		          }
+		        });//cierre de ajax
+
+    			$("#myModal").modal();
+    		}
+	        
+		});
+
+		function enviaEvento(){
+			//alert($("#eventos").val());
+			evento = $("#eventos").val();
+			$.ajax({
+	          type: "POST",
+	          url:        window.server + "obtiene_turno.php",
+	          data: ({
+	                  evento_id: evento
+	              }),
+	          dataType:   "html",
+	          async: false,
+	          success:    function(data){
+	            obj = $.parseJSON(data);
+	              html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              // html = "<div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div>";
+	              // html += "<div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div>";
+	              document.getElementById("clicks").innerHTML = html;
+	              $("#myModal").modal("hide");
+	          }
+	        });//cierre de ajax
+
+	        $.ajax({
+	          type: "POST",
+	          url:        window.server + "obtiene_turno_pantalla.php",
+	          data: ({
+	                  evento_id: evento
+	              }),
+	          dataType:   "html",
+	          async: false,
+	          success:    function(data){
+	            obj = $.parseJSON(data);
+	              html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+	              document.getElementById("clickspantalla").innerHTML = html;
+	              $("#myModal").modal("hide");
+	          }
+	        });//cierre de ajax
+	        return false;
+		}
+
+		function buscarDirecto() {
+			numero = $('#numeroDirecto').val();
+			if (numero != '') {
+				// alert(numero);
+				$.ajax({
+			        type: "POST",
+			        url:        window.server + "turno_directo.php",
+			        data: ({
+			                evento_id: evento,
+			                numero: numero
+			            }),
+			        dataType:   "html",
+			        async: false,
+			        success:    function(data){
+			          obj = $.parseJSON(data);
+			          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+		              document.getElementById("clicks").innerHTML = html;
+		              $("#directo").modal("hide");
+			        }
+			    });//cierre de ajax
+			}else{
+				alert('Ingresa un número');
+			}			
+		}
+
+		function buscarDirectoPantalla() {
+			numero = $('#numeroDirectoPantalla').val();
+			if (numero != '') {
+				// alert(numero);
+				$.ajax({
+			        type: "POST",
+			        url:        window.server + "turno_directo_pantalla.php",
+			        data: ({
+			                evento_id: evento,
+			                numero: numero
+			            }),
+			        dataType:   "html",
+			        async: false,
+			        success:    function(data){
+			          obj = $.parseJSON(data);
+			          html= "<table><thead><tr><td style='text-align: center; width: 40%'><div style='font-size:50px; margin-top: 10px; position:relative;'> A"+obj.turno+"</div></td><td style='text-align: center;'><div style='font-size:30px; margin-top: 10px; position:relative;'>"+obj.nombre+"</div></td</tr></thead></table>";
+		              document.getElementById("clickspantalla").innerHTML = html;
+		              $("#directoPantalla").modal("hide");
+			        }
+			    });//cierre de ajax
+			}else{
+				alert('Ingresa un número');
+			}			
+		}
+    </script>
+
+    <!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog" data-backdrop="static">
+		<form>
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">Seleccione evento</h4>
+		      </div>
+		      <div class="modal-body">
+	      		<select id="eventos" class="form-control" required="true"></select>
+		      </div>
+		      <div class="modal-footer">
+		      	<input type="submit" name="" value="Seleccionar" class="btn btn-success" onclick="return enviaEvento();">
+		      </div>
+		    </div>
+
+		  </div>
+	  	</form>
+	</div>
+
+	<div id="directo" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Buscar turno</h4>
+	      </div>
+	      <div class="modal-body">
+	        <input type="number" name="numeroDirecto" id="numeroDirecto" class="form-control">
+	      </div>
+	      <div class="modal-footer">
+	      	<a href="javascript: buscarDirecto()" class="btn btn-success">Buscar</a>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+	<div id="directoPantalla" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Buscar turno</h4>
+	      </div>
+	      <div class="modal-body">
+	        <input type="number" name="numeroDirectoPantalla" id="numeroDirectoPantalla" class="form-control">
+	      </div>
+	      <div class="modal-footer">
+	      	<a href="javascript: buscarDirectoPantalla()" class="btn btn-success">Buscar</a>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+</body>
+</html>
